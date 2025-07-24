@@ -14,8 +14,10 @@
 
     <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}">
     <!-- เชื่อม jQuery จาก public/js -->
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
 </head>
 
 <body>
@@ -103,6 +105,7 @@
         </nav>
     </div>
 
+    <script> toastr.success("Successfully"); toastr.success("Cannot Save"); </script>
     <!-- เชื่อม Bootstrap JS จาก public -->
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 
