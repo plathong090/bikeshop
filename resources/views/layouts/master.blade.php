@@ -105,7 +105,7 @@
         </nav>
     </div>
 
-    <script> toastr.success("Successfully"); toastr.success("Cannot Save"); </script>
+    <script> toastr.success("Successfully"); toastr.error("Cannot Save"); </script>
     <!-- เชื่อม Bootstrap JS จาก public -->
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 
