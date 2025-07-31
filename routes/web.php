@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use  App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.master'); //เชื่อมไฟล์ master.blade
+    return view('welcome'); 
 });
+Route::get('/product', [ProductController::class, 'index']); // ใช้ get method เพื่อแสดงรายการสินค้า
+Route::post('/product/search', [ProductController::class, 'search']); // ใช้ post method เพื่อค้นหาสินค้า

@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Document</title>
+    <title>@yield('title', 'BikeShop | จําหน่ายอะไหล่จักรยานออนไลน์')</title> <!--add yield-->
 
     <!-- เชื่อม Bootstrap CSS จาก public -->
     <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.min.css') }}">
-
     <link rel="stylesheet" href="{{ asset('vendor/toastr/toastr.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    
     <!-- เชื่อม jQuery จาก public/js -->
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
@@ -42,7 +42,7 @@
                     <li><a href="#">รายงาน</a></li>
                 </ul>
             </div>
-
+            <!--
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
@@ -99,13 +99,17 @@
                     </tr>
                 </tbody>
             </table>
-
+        
             <a href="#" class="btn btn-success"><i class="fa fa-save"></i> Confirm</a>
             <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i> Cancel</a>
-        </nav>
+        -->
+        </nav> @yield('content') <!-- add yield-->
     </div>
 
-    <script> toastr.success("Successfully"); toastr.error("Cannot Save"); </script>
+    <script>
+        toastr.success("Successfully");
+        toastr.error("Cannot Save");
+    </script>
     <!-- เชื่อม Bootstrap JS จาก public -->
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 
