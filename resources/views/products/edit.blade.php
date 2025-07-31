@@ -32,6 +32,12 @@
         </div>
         <div class="panel-body">
             <table>
+                @if ($product->image_url)
+                    <tr>
+                        <td><strong> รูปสินค้า </strong></td>
+                        <td><img src="{{ URL::to($product->image_url) }}" width="100px"></td>
+                    </tr>
+                @endif <!-- แสดงรูปภาพสินค้า หากมี -->
                 <tr>
                     <td>{{ Form::label('code', 'รหัสสินค้า ') }} </td>
                     <td>{{ Form::text('code', $product->code, ['class' => 'form-control']) }}</td>

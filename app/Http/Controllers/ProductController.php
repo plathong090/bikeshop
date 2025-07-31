@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\product;
 use App\Models\category;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -68,7 +69,23 @@ class ProductController extends Controller
         $product->price = $request->price;
         $product->stock_qty = $request->stock_qty;
         $product->category_id = $request->category_id;
-        $product->save();
+
+        if ($request->hasFile('image')) {
+            $f = $request->file('image');
+            $upload_to = 'upload/images';
+
+            // get path
+            $relative_path = $upload_to . '/' . $f->getClientOriginalName();
+            $absolute_path = public_path() . '/' . $upload_to;
+            
+            // upload file
+            $f->move($absolute_path, $f->getClientOriginalName());
+
+            // save image path to database
+            $product->image_url = $relative_path;
+            $product->save();
+            Image::make(public_path().'/'.$relative_path)->resize(250, 250)->save();
+        }
 
         return redirect('product')
             ->with('ok', true)
