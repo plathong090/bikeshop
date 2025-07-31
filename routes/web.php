@@ -18,3 +18,5 @@ Route::get('/', function () {
 });
 Route::get('/product', [ProductController::class, 'index']); // ใช้ get method เพื่อแสดงรายการสินค้า
 Route::post('/product/search', [ProductController::class, 'search']); // ใช้ post method เพื่อค้นหาสินค้า
+Route::get('/product/edit/{id?}', [ProductController::class, 'edit']); // ใช้ get method เพื่อแก้ไขสินค้า
+Route::post('/product/update', [ProductController::class, 'update']); // ใช้ post method เพื่ออัพเดตข้อมูลสินค้า
