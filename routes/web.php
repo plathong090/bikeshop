@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,3 +24,10 @@ Route::post('/product/update', [ProductController::class, 'update']); // ใช�
 Route::get('/product/remove/{id}', [ProductController::class, 'remove']); // ใช้ get method เพื่อลบข้อมูลสินค้า
 Route::post('/product/insert', [ProductController::class, 'insert']); //รับข้อมูลเพิ่มข้อมูลสินค้า
 Route::get('/product/add', [ProductController::class, 'add']); //แสดงหน้าฟอร์มเพิ่มสินค้า
+
+Route::get('/category', [CategoryController::class, 'index']); 
+Route::get('/category/edit/{id?}', [CategoryController::class, 'edit']);
+Route::post('/category/update', [CategoryController::class, 'update']);
+Route::get('/category/remove/{id}', [CategoryController::class, 'remove']);
+Route::post('/category/insert', [CategoryController::class, 'insert']);
+Route::get('/category/add', [CategoryController::class, 'add']);

@@ -110,7 +110,7 @@ class ProductController extends Controller
 
     public function add()
     {
-        $product = new Product(); // สร้าง object ว่าง
+        $product = new Product();
         $categories = Category::pluck('name', 'id')->prepend('เลือกรายการ', '');
         return view('products.add', compact('product', 'categories'));
     }
