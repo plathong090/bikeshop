@@ -11,9 +11,20 @@ use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = product::all();
+        $q = $request->input('q'); // รับค่าจากฟอร์มค้นหา
+
+        if ($q) {
+            // ถ้ามีการพิมพ์ค้นหา
+            $products = Product::where('name', 'like', "%$q%")
+                ->orWhere('code', 'like', "%$q%")
+                ->get();
+        } else {
+            // ถ้าไม่มีคำค้นหา แสดงทั้งหมด
+            $products = Product::all();
+        }
+
         return view('products.index', compact('products'));
     }
 
@@ -77,18 +88,26 @@ class ProductController extends Controller
             // get path
             $relative_path = $upload_to . '/' . $f->getClientOriginalName();
             $absolute_path = public_path() . '/' . $upload_to;
-            
+
             // upload file
             $f->move($absolute_path, $f->getClientOriginalName());
 
             // save image path to database
             $product->image_url = $relative_path;
             $product->save();
-            Image::make(public_path().'/'.$relative_path)->resize(250, 250)->save();
+            Image::make(public_path() . '/' . $relative_path)->resize(250, 250)->save();
         }
 
         return redirect('product')
             ->with('ok', true)
             ->with('msg', 'บันทึกข้อมูลเรียบร้อยแล้ว');
+    }
+
+    public function remove($id)
+    {
+        Product::find($id)->delete();
+        return redirect('product')
+            ->with('ok', true)
+            ->with('msg', 'ลบข้อมูลสําเร็จ');
     }
 }

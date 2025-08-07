@@ -35,7 +35,7 @@
                 @if ($product->image_url)
                     <tr>
                         <td><strong> รูปสินค้า </strong></td>
-                        <td><img src="{{ URL::to($product->image_url) }}" width="100px"></td>
+                        <td><img src="{{ URL::to($product->image_url) }}" width="100px"></td> <!-- แสดงรูปภาพสินค้า หากมี -->   
                     </tr>
                 @endif <!-- แสดงรูปภาพสินค้า หากมี -->
                 <tr>
@@ -48,9 +48,9 @@
                 </tr>
                 <tr>
                     <td>{{ Form::label('category_id', 'ประเภทสินค้า ') }}</td>
-                    <td>{{ Form::select('category_id', $categories, Request::old('category_id'), ['class' => 'form-control']) }}
+                    <td>{{ Form::select('category_id', $categories, Request::old('category_id'), ['class' => 'form-control']) }} 
                     </td>
-                </tr> <!-- สร้าง select box เพื่อเลือกประเภทสินค้า -->
+                </tr> <!-- เพิ่ม Request::old เพื่อแสดง dropdown -->
                 <tr>
                     <td>{{ Form::label('stock_qty', 'คงเหลือ') }}</td>
                     <td>{{ Form::text('stock_qty', $product->stock_qty, ['class' => 'form-control']) }} </td>
