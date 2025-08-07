@@ -45,8 +45,15 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::pluck('name', 'id')->prepend('เลือกรายการ', ""); //get all categories
-        return view('products.edit')->with('product', $product)
-            ->with('categories', $categories); //send data to view
+
+        if ($id) {
+            $product = Product::where('id', $id)->first();
+            return view('products.edit')->with('product', $product)
+                ->with('categories', $categories); //send data to view 
+        } else {
+            return view('product/add')
+                ->with('categories', $categories);
+        }
     }
 
     public function update(Request $request)
@@ -97,6 +104,68 @@ class ProductController extends Controller
             $product->save();
             Image::make(public_path() . '/' . $relative_path)->resize(250, 250)->save();
         }
+        $product->save();
+        return redirect('product')
+            ->with('ok', true)
+            ->with('msg', 'บันทึกข้อมูลเรียบร้อยแล้ว');
+    }
+
+    public function add()
+    {
+        $product = new Product(); // สร้าง object ว่าง
+        $categories = Category::pluck('name', 'id')->prepend('เลือกรายการ', '');
+        return view('products.add', compact('product', 'categories'));
+    }
+
+    public function insert(Request $request)
+    {
+        $rules = [
+            'name' => 'required|max:255',
+            'code' => 'required|max:255',
+            'price' => 'numeric',
+            'stock_qty' => 'numeric',
+            'category_id' => 'required|numeric',
+        ];
+
+        $messages = [
+            'name.required' => 'กรุณากรอกชื่อสินค้า',
+            'code.required' => 'กรุณากรอกรหัสสินค้า',
+            'numeric' => 'โปรดกรอกข้อมูลเป็นตัวเลขเท่านั้น',
+            'category_id.required' => 'กรุณาเลือกหมวดหมู่สินค้า',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect('product/add')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->code = $request->code;
+        $product->price = $request->price;
+        $product->stock_qty = $request->stock_qty;
+        $product->category_id = $request->category_id;
+
+        if ($request->hasFile('image')) {
+            $f = $request->file('image');
+            $upload_to = 'upload/images';
+
+            // get path
+            $relative_path = $upload_to . '/' . $f->getClientOriginalName();
+            $absolute_path = public_path() . '/' . $upload_to;
+
+            // upload file
+            $f->move($absolute_path, $f->getClientOriginalName());
+
+            // save image path to database
+            $product->image_url = $relative_path;
+            Image::make(public_path() . '/' . $relative_path)->resize(250, 250)->save();
+        }
+
+        $product->save();
 
         return redirect('product')
             ->with('ok', true)

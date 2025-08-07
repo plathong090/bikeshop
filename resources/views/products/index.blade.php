@@ -15,7 +15,11 @@
                 <input type="text" name="q" class="form-control" placeholder="ค้นหาสินค้า"
                     value="{{ request('q') }}">
                 <button type="submit" class="btn btn-primary">ค้นหา</button>
+                <a href="{{ URL::to('product/add') }}" class="btn btn-success mb-3"> เพิ่มสินค้า</a>
+
             </form> <!-- สร้าง name q เพื่อใช้ไว้รับค่า textbox -->
+
+
         </div>
 
         <div class="container">
@@ -69,6 +73,5 @@
                     }
                 });
             </script>
-
         </div>
     @endsection

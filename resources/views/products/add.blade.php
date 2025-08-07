@@ -1,44 +1,27 @@
 @extends('layouts.master')
-@section('title') BikeShop | แก้ไขข้อมูลสินค้า @stop
+@section('title') BikeShop | เพิ่มข้อมูลสินค้า @stop
 @section('content')
-    <h1>แก้ไขสินค้า </h1>
+    <h1>เพิ่มสินค้า </h1>
 
     <ul class="breadcrumb">
         <li><a href="{{ URL::to('product') }}">หน้าแรก</a></li>
-        <li class="active">แก้ไขสินค้า </li>
+        <li class="active">เพิ่มสินค้า </li>
     </ul>
 
     {!! Form::model($product, [
-        'url' => '/product/update',
+        'url' => '/product/insert',
         'method' => 'post',
         'enctype' => 'multipart/form-data',
     ]) !!}
 
-    <!--แสดงข้อความแจ้งเตือนหากมีข้อผิดพลาดในการกรอกข้อมูล -->
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <div>{{ $error }}</div>
-            @endforeach
-        </div>
-    @endif
-
-    <input type="hidden" name="id" value="{{ $product->id }}">
-
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="panel-title">
-                <strong>ข้อมูลสินค้า </strong>
+                <strong> เพิ่มข้อมูลสินค้า </strong>
             </div>
         </div>
         <div class="panel-body">
             <table>
-                @if ($product->image_url)
-                    <tr>
-                        <td><strong> รูปสินค้า </strong></td>
-                        <td><img src="{{ URL::to($product->image_url) }}" width="100px"></td> <!-- แสดงรูปภาพสินค้า หากมี -->   
-                    </tr>
-                @endif <!-- แสดงรูปภาพสินค้า หากมี -->
                 <tr>
                     <td>{{ Form::label('code', 'รหัสสินค้า ') }} </td>
                     <td>{{ Form::text('code', $product->code, ['class' => 'form-control']) }}</td>
@@ -60,7 +43,6 @@
                     <td>{{ Form::label('price', 'ราคาขายต่อหน่วย') }}</td>
                     <td>{{ Form::text('price', $product->price, ['class' => 'form-control']) }}</td>
                 </tr>
-
                 <tr>
                     <td>{{ Form::label('image', 'เลือกรูปภาพสินค้า ') }}</td>
                     <td>{{ Form::file('image') }}</td>
