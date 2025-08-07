@@ -18,8 +18,6 @@
                 <a href="{{ URL::to('product/add') }}" class="btn btn-success mb-3"> เพิ่มสินค้า</a>
 
             </form> <!-- สร้าง name q เพื่อใช้ไว้รับค่า textbox -->
-
-
         </div>
 
         <div class="container">
@@ -38,7 +36,7 @@
                 <tbody>
                     @foreach ($products as $p)
                         <tr>
-                            <td><img src="{{ $p->image_url }}" width="50px"></td> <!-- แสดงรูปสินค้า -->
+                            <td><img src="{{ asset($p->image_url)}}" width="50px"></td> <!--ใช้ asset แสดงรูปสินค้า -->
                             <td>{{ $p->code }}</td>
                             <td>{{ $p->name }}</td>
                             <td>{{ $p->category->name }}</td>

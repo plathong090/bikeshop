@@ -20,6 +20,6 @@ Route::get('/product', [ProductController::class, 'index']); // ใช้ get me
 Route::post('/product/search', [ProductController::class, 'search']); // ใช้ post method เพื่อค้นหาสินค้า
 Route::get('/product/edit/{id?}', [ProductController::class, 'edit']); // ใช้ get method เพื่อแก้ไขสินค้า
 Route::post('/product/update', [ProductController::class, 'update']); // ใช้ post method เพื่ออัพเดตข้อมูลสินค้า
-Route::post('/product/remove', [ProductController::class, 'remove']); // ใช้ post method เพื่อลบข้อมูลสินค้า
+Route::get('/product/remove/{id}', [ProductController::class, 'remove']); // ใช้ get method เพื่อลบข้อมูลสินค้า
 Route::post('/product/insert', [ProductController::class, 'insert']); // ใช้ post method เพื่อเพิ่มข้อมูลสินค้า
 Route::get('/product/add', [ProductController::class, 'add']);

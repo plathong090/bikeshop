@@ -13,15 +13,13 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $q = $request->input('q'); // รับค่าจากฟอร์มค้นหา
+        $q = $request->input('q');
 
         if ($q) {
-            // ถ้ามีการพิมพ์ค้นหา
             $products = Product::where('name', 'like', "%$q%")
                 ->orWhere('code', 'like', "%$q%")
                 ->get();
         } else {
-            // ถ้าไม่มีคำค้นหา แสดงทั้งหมด
             $products = Product::all();
         }
 
@@ -30,11 +28,11 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->q; //get input from textbox
-        if ($query) {
-            $products = Product::where('name', 'like', '%' . $query . '%')
-                ->orWhere('name', 'like', '%' . $query . '%')
-                ->get(); //find product by name
+        $textbox = $request->q; //get input from textbox
+        if ($textbox) {
+            $products = Product::where('name', 'like', '%' . $textbox . '%')
+                ->orWhere('name', 'like', '%' . $textbox . '%')
+                ->get(); 
         } else {
             $products = Product::all();
         }
