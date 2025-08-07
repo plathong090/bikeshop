@@ -105,7 +105,7 @@
         -->
         </nav> @yield('content') <!-- add yield-->
     </div>
-    <!-- แสดงข้อความแจ้งเตือนหากมีการส่งข้อความ -->
+    <!-- แสดงข้อความแจ้งเตือน -->
     @if (session('msg'))
         @if (session('ok'))
             <script>

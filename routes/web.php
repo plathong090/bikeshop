@@ -21,5 +21,5 @@ Route::post('/product/search', [ProductController::class, 'search']); // ใช�
 Route::get('/product/edit/{id?}', [ProductController::class, 'edit']); // ใช้ get method เพื่อแก้ไขสินค้า
 Route::post('/product/update', [ProductController::class, 'update']); // ใช้ post method เพื่ออัพเดตข้อมูลสินค้า
 Route::get('/product/remove/{id}', [ProductController::class, 'remove']); // ใช้ get method เพื่อลบข้อมูลสินค้า
-Route::post('/product/insert', [ProductController::class, 'insert']); // ใช้ post method เพื่อเพิ่มข้อมูลสินค้า
-Route::get('/product/add', [ProductController::class, 'add']);
+Route::post('/product/insert', [ProductController::class, 'insert']); //รับข้อมูลเพิ่มข้อมูลสินค้า
+Route::get('/product/add', [ProductController::class, 'add']); //แสดงหน้าฟอร์มเพิ่มสินค้า
