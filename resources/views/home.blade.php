@@ -1,87 +1,92 @@
 @extends('layouts.master')
+
 @section('title')
     BikeShop | อุปกรณ์จักรยาน, อะไหล่, ชุดแข่ง และอุปกรณ์ตกแต่ง
 @endsection
+
 @section('content')
     <div class="container" ng-app="app" ng-controller="ctrl">
-        <h1>@{ helloMessage }</h1>
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item" ng-class="{'active': category == null}"
+                       ng-click="getProductList(null)">ทั้งหมด</a>
+                    <a href="#" class="list-group-item" ng-repeat="c in categories"
+                       ng-click="getProductList(c)" ng-class="{'active': category.id == c.id}">
+                        @{ c.name }
+                    </a>
+                </div>
+            </div>
 
-        <input type="text" class="form-control" ng-model="query.name" placeholder="ค้นหา">
-
-        <table class="table table-bordered" ng-if="products.length">
-            <thead>
-                <tr>
-                    <th>รหัส</th>
-                    <th>ชื่อสินค้า </th>
-                    <th>ราคาขาย</th>
-                    <th>คงเหลือ</th>
-                    <th>สถานะ</th>
-                </tr>
-            </thead>
-            <tr ng-repeat="p in products|filter:query">
-                <td>@{p.code}</td>
-                <td>@{p.name}</td>
-                <td>@{p.price | number:2 }</td>
-                <td>@{p.stock_qty | number:0} </td>
-                <td>
-                    <span ng-if="p.stock_qty > 0 && p.stock_qty < 5"
-                        ng-class="{'label label-warning': p.stock_qty > 0 && p.stock_qty < 5}">สินค้าใกล้หมด</span>
-                    <span ng-if="p.stock_qty == 0" ng-class="{'label label-danger': p.stock_qty == 0}">สินค้าหมด</span>
-                </td>
-            </tr>
-        </table>
-        <h3 ng-if="!products.length">ไม่พบข้อมูลสินค้า </h3>
+            <!-- Product Grid -->
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-3" ng-repeat="p in products">
+                        <div class="panel panel-default bs-product-card">
+                            <div class="panel-body">
+                                <h4><a href="#">@{ p.name }</a></h4>
+                                <div class="panel panel-default">
+                                    <img ng-src="@{ p.image_url }" class="img-responsive">
+                                </div>
+                                <div class="form-group">
+                                    <div>คงเหลือ: @{ p.stock_qty }</div>
+                                    <div>ราคา <strong>@{ p.price }</strong> บาท</div>
+                                </div>
+                                <a href="#" class="btn btn-success btn-block">
+                                    <i class="fa fa-shopping-cart"></i> หยิบใส่ตะกร้า
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- AngularJS Script -->
     <script type="text/javascript">
-        var app = angular.module('app', []).config(function($interpolateProvider) {
+        var app = angular.module('app', [], function ($interpolateProvider) {
             $interpolateProvider.startSymbol('@{').endSymbol('}');
         });
 
-        app.controller('ctrl', function($scope) {
-            $scope.products = [{
-                    'code': 'A001',
-                    'name': 'เบาะจักรยาน PROXIM NEMBO TIROX',
-                    'price': 5800.00,
-                    'stock_qty': 3,
-                    'category_id': 4
-                },
-                {
-                    'code': 'A002',
-                    'name': 'MEROCA ชุดล้อเสือหมอบคาร์บอน',
-                    'price': 6300.00,
-                    'stock_qty': 2,
-                    'category_id': 2
-                },
-                {
-                    'code': 'A003',
-                    'name': 'เฟรมจักรยานเสือหมอบ De rosa SUPER KING E',
-                    'price': 21300.00,
-                    'stock_qty': 4,
-                    'category_id': 1
-                },
-                {
-                    'code': 'A004',
-                    'name': 'เฟืองจักรยานเสือหมอบ 11',
-                    'price': 5300.00,
-                    'stock_qty': 9,
-                    'category_id': 6
-                },
-                {
-                    'code': 'A005',
-                    'name': 'แฮนด์จักรยาน MAN.INTEGR.',
-                    'price': 27300.00,
-                    'stock_qty': 0,
-                    'category_id': 5
-                },
-                {
-                    'code': 'A006',
-                    'name': 'ชุดขับจักรยานเสือภูเขา SRAM X0 T-TYPE EAGLE',
-                    'price': 64300.00,
-                    'stock_qty': 5,
-                    'category_id': 7
+        app.service('productService', function ($http) {
+            this.getProductList = function (category_id) {
+                if (category_id) {
+                    return $http.get('/api/product/' + category_id);   
                 }
-            ];
+                return $http.get('/api/product');
+            };
+
+            this.getCategoryList = function () {
+                return $http.get('/api/category');
+            };
+        });
+
+        app.controller('ctrl', function ($scope, productService) {
+            $scope.products = [];
+            $scope.categories = [];
+            $scope.category = null;
+
+            $scope.getProductList = function (category) {
+                $scope.category = category;
+                const category_id = category != null ? category.id : '';
+                productService.getProductList(category_id).then(function (res) {
+                    if (!res.data.ok) return;
+                    $scope.products = res.data.products;
+                });
+            };
+
+            $scope.getCategoryList = function () {
+                productService.getCategoryList().then(function (res) {
+                    if (!res.data.ok) return;
+                    $scope.categories = res.data.categories;
+                });
+            };
+
+            // Initial calls
+            $scope.getProductList(null);
+            $scope.getCategoryList();
         });
     </script>
 @endsection
