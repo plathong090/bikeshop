@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +32,5 @@ Route::post('/category/update', [CategoryController::class, 'update']);
 Route::get('/category/remove/{id}', [CategoryController::class, 'remove']);
 Route::post('/category/insert', [CategoryController::class, 'insert']);
 Route::get('/category/add', [CategoryController::class, 'add']);
+
+Route::get('/home', [HomeController::class, 'index']);

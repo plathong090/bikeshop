@@ -17,6 +17,8 @@
 
     <!-- เชื่อม jQuery จาก public/js -->
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    <!-- เชื่อม angular จาก public/js -->
+    <script src="{{ asset('js/angular.min.js') }}"></script>
     <script src="{{ asset('vendor/toastr/toastr.min.js') }}"></script>
 </head>
 
@@ -37,7 +39,7 @@
 
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">หน้าแรก</a></li>
+                    <li><a href="{{ URL::to('home') }}">หน้าแรก</a></li>
                     <li><a href="{{ URL::to('product') }}">ข้อมูลสินค้า</a></li>
                     <li><a href="{{ URL::to('category') }}">ประเภทสินค้า</a></li>
                     <li><a href="#">รายงาน</a></li>
