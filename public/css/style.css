@@ -23,7 +23,7 @@
 
 .bs-product-card img {
     height: 100px;
-    margin-top: 10px;
+    margin: 10px auto 0 auto;
 }
 
 .bs-product-card .btn-success {

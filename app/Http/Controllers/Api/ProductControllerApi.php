@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -21,5 +22,21 @@ class ProductControllerApi extends Controller
             'ok' => true,
             'products' => $products
         ]);
+    }
+
+    public function product_search(Request $request)
+    {
+        $query = $request->input('query');
+
+        if ($query) {
+            $products = Product::where('name', 'like', '%' . $query . '%')->get();
+        } else {
+            $products = Product::all();
+        }
+
+        return response()->json(array(
+            'ok' => true,
+            'products' => $products,
+        ));
     }
 }
