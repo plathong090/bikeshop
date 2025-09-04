@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
@@ -34,3 +35,7 @@ Route::post('/category/insert', [CategoryController::class, 'insert']);
 Route::get('/category/add', [CategoryController::class, 'add']);
 
 Route::get('/home', [HomeController::class, 'index']);
+
+Route::get('/cart/view',[CartController::class,'viewCart']);
+Route::get('/cart/add/{id}',[CartController::class,'addToCart']);
+Route::get('/cart/delete/{id}',[CartController::class,'deleteCart']);

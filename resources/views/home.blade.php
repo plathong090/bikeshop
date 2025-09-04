@@ -36,7 +36,7 @@
                                     <div>คงเหลือ: @{ p.stock_qty }</div>
                                     <div>ราคา <strong>@{ p.price }</strong> บาท</div>
                                 </div>
-                                <a href="#" class="btn btn-success btn-block">
+                                <a href="#" class="btn btn-success btn-block" ng-click="addToCart(p)">
                                     <i class="fa fa-shopping-cart"></i> หยิบใส่ตะกร้า
                                 </a>
                             </div>
@@ -104,6 +104,10 @@
                     if (!res.data.ok) return;
                     $scope.products = res.data.products;
                 });
+            };
+
+            $scope.addToCart = function(p) {
+                window.location.href = '/cart/add/' + p.id;
             };
 
             // Initial calls

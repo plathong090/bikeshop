@@ -44,6 +44,11 @@
                     <li><a href="{{ URL::to('category') }}">ประเภทสินค้า</a></li>
                     <li><a href="#">รายงาน</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><i class="fa fa-shopping-cart"></i> ตะกร้า
+                            <span class="label label-danger">
+                                {!! count(Session::get('cart_items')) !!}</span></a></li>
+                </ul>
             </div>
             <!--
             <table class="table table-bordered table-striped table-hover">
