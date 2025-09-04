@@ -47,4 +47,12 @@ class CartController extends Controller
         Session::put('cart_items', $cart_items);
         return redirect('cart/view');
     }
+
+    public function updateCart($id, $qty)
+    {
+        $cart_items = Session::get('cart_items');
+        $cart_items[$id]['qty'] = $qty;
+        Session::put('cart_items', $cart_items);
+        return redirect('cart/view');
+    }
 }
