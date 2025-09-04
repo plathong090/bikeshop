@@ -55,4 +55,6 @@ class CartController extends Controller
         Session::put('cart_items', $cart_items);
         return redirect('cart/view');
     }
+
+    
 }

@@ -29,7 +29,8 @@
                                 <td><img src="{{ asset($c['image_url']) }}" height="36"></td>
                                 <td>{{ $c['code'] }}</td>
                                 <td>{{ $c['name'] }}</td>
-                                <td><input type="text" class="form-control" value="{{ $c['qty'] }}"></td>
+                                <td><input type="text" class="form-control" value="{{ $c['qty'] }}"
+                                        onKeyUp="updateCart({{ $c['id'] }}, this)"></td>
                                 <td>{{ number_format($c['price'], 0) }}</td>
                                 <td>
                                     <a href="{{ URL::to('cart/delete/' . $c['id']) }}" class="btn btn-danger">
@@ -57,4 +58,11 @@
             <a href="{{ URL::to('cart/checkout') }}" class="btn btn-primary">ชําระเงิน <i
                     class="fa fa-chevron-right"></i></a>
         </div>
+
+        <script>
+            function updateCart(id, qty) {
+                window.location.href = '/cart/update/' + id + '/' + qty.value;
+            }
+        </script>
+
     @endsection
