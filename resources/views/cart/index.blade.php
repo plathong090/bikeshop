@@ -31,21 +31,26 @@
                                 <td>{{ $c['name'] }}</td>
                                 <td><input type="text" class="form-control" value="{{ $c['qty'] }}"
                                         onKeyUp="updateCart({{ $c['id'] }}, this)"></td>
-                                <td>{{ number_format($c['price'], 0) }}</td>
+                                <td class="item-total-price">{{ number_format($c['price'] * $c['qty'], 0) }}</td>
                                 <td>
                                     <a href="{{ URL::to('cart/delete/' . $c['id']) }}" class="btn btn-danger">
                                         <i class="fa fa-times"></i></a>
                                 </td>
                             </tr>
-                            <?php $sum_price += $c['price']; ?>
+                            <?php $sum_price += $c['price'] * $c['qty']; ?>
                             <?php $sum_qty += $c['qty']; ?>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="3">รวม</th>
+                            <th>{{ number_format($sum_qty, 0) }}</th>
+                            <th>{{ number_format($sum_price, 0) }}</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
-                <div class="text-left">
-                    <strong>รวมทั้งหมด {{ $sum_qty }} ชิ้น</strong><br>
-                    <strong>ราคารวม {{ number_format($sum_price, 2) }} บาท</strong>
-                </div>
+                </table>
             @else
                 <div class="panel-body">
                     <p class="text-center">ไม่มีสินค้าในตะกร้า</p>
