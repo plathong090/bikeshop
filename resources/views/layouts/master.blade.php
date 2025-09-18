@@ -114,8 +114,8 @@
             <a href="#" class="btn btn-success"><i class="fa fa-save"></i> Confirm</a>
             <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i> Cancel</a>
         -->
-            <h1>นางสาวปรางค์ทอง ประทุม 6506021612048</h1>
-        </nav> @yield('content') ช
+            <!-- <h1>นางสาวปรางค์ทอง ประทุม 6506021612048</h1> -->
+        </nav> @yield('content')
     </div>
 
 

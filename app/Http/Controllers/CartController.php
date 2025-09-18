@@ -53,9 +53,49 @@ class CartController extends Controller
         $cart_items = Session::get('cart_items');
         $cart_items[$id]['qty'] = $qty;
         Session::put('cart_items', $cart_items);
-        
+
         return redirect('cart/view');
     }
 
-    
+    public function checkout()
+    {
+        $cart_items = Session::get('cart_items', []);
+        return view('cart/checkout', compact('cart_items'));
+    }
+
+    public function complete(Request $request)
+    {
+        $cart_items = Session::get('cart_items');
+        $cust_name = $request->input('cust_name');
+        $cust_email = $request->input('cust_email');
+        $po_no = 'PO' . date("Ymd");
+        $po_date = date("Y-m-d H:i:s");
+        $total_amount = 0;
+
+        foreach ($cart_items as $c) {
+            $total_amount += $c['price'] * $c['qty'];
+        }
+
+        $html_output = view('cart.complete', compact(
+            'cart_items',
+            'cust_name',
+            'cust_email',
+            'po_no',
+            'po_date',
+            'total_amount'
+        ))->render();
+
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($html_output);
+
+        return response($mpdf->Output('', 'S'), 200)
+            ->header('Content-Type', 'application/pdf');
+    }
+
+    public function finish_order()
+    {
+        $cart_items = Session::get('cart_items');
+        Session::remove('cart_items');
+        return redirect('/');
+    }
 }
